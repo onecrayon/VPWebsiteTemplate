@@ -29,7 +29,7 @@ By default the template uses the styles.css page for its CSS. You can always cha
 
 **styles.css**
 
-Your default stylesheet. If you want to use a different stylesheet, remember to set `VPDirectWriteOnHTMLExport` equal to `1` in the Page Meta palette; otherwise it will be converted to HTML when you export it.
+Your default stylesheet. If you want to use a different stylesheet, remember to set `VPDirectWriteOnHTMLExport` equal to `1` in the Page Meta palette (otherwise it will be converted to HTML when you export it) and change the config variable `CSS_PAGE_NAME` in VPJSPrefixScript.
 
 **VPJSPrefixScript**
 
