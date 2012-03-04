@@ -1,0 +1,214 @@
+// Currently unused
+function webExportWillBegin(contextDictionary) {}
+
+function webExportWillMarkupAttributedStringForItem(contextDictionary, item, attributedString) {
+	// Detect a header with an ID specified
+	// Regex borrowed from Python Markdown 2 (MIT license):
+	// <https://github.com/trentm/python-markdown2>
+	/*
+	Groups:
+	
+	1. Header hashes
+	2. Header text
+	3. ID
+	4. Linebreak
+	*/
+	var headerRE = /(\#{1,6})(.*?)\#*[ \t]*\{[ \t]*\#([\-_.:a-zA-Z0-9]+)[ \t]*\}(\r\n|\r|\n|$)/g;
+	
+	// Our actual parsing function to convert a header with an ID to HTML
+	function convertHeaderToHtml(str, group1, group2, group3, group4) {
+		// Figure out what header we're using
+		var level = group1.length;
+		if (level > 6) {
+			level = 6;
+		}
+		// Return the header with ID as our text
+		return '<h' + level + ' id="' + group3 + '">' + group2.replace(/^\s+|\s+$/g, '') + '</h' + level + '>' + group4;
+	}
+	
+	// Fetch the page contents as a Javascript string
+	var output = attributedString.string();
+	// Replace headers with IDs with HTML
+	output = output.replace(headerRE, convertHeaderToHtml);
+	// Replace arrow shorthand with arrow entity
+	if (config.CONVERT_ARROWS_TO_ENTITIES) {
+		output = output.replace(/(?:=|-)>/g, '&rarr;');
+	}
+	
+	// This sneaky bit of work allows us to get around creating a new NSAttributedString
+	attributedString.mutableString().setString_(output);
+	// Return our new string
+	return attributedString;
+}
+
+//! UTILITY FUNCTIONS
+
+/* 
+ * To Title Case 2.0.1 – http://individed.com/code/to-title-case/
+ * Copyright © 2008–2012 David Gouch. Licensed under the MIT License. 
+ */
+
+function toTitleCase(text) {
+  var smallWords = /^(a|an|and|as|at|but|by|en|for|if|in|of|on|or|the|to|vs?\.?|via)$/i;
+
+  return text.replace(/([^\W_]+[^\s\-]*) */g, function (match, p1, index, title) {
+	if (index > 0 && index + p1.length !== title.length &&
+	  p1.search(smallWords) > -1 && title.charAt(index - 2) !== ":" && 
+	  title.charAt(index - 1).search(/[^\s\-]/) < 0) {
+	  return match.toLowerCase();
+	}
+
+	if (p1.substr(1).search(/[A-Z]|\../) > -1) {
+	  return match;
+	}
+
+	return match.charAt(0).toUpperCase() + match.substr(1);
+  });
+}
+
+// This handles the individual words or characters inside the entire shortcut when converting to special shortcut markup
+function parseKeyCodeBlock(str, group1) {
+	var commandRE = /(\b(?:page (?:up|down)|forward delete|caps lock|\w+)\b|&amp;|[`~!@#$%\^&*()-_+={}\[\]|\\:;""\'\'<,>.?\/])/g;
+	return '<kbd class="shortcut">' + group1.replace(commandRE, '<kbd>$1</kbd>') + '</kbd>';
+}
+
+// This does some parsing on the <title> tags to get it working properly
+function correctTitleFormatting(str, group1) {
+	return '<title>' + toTitleCase(group1.replace(/-/g, ' ')) + '</title>';
+}
+
+//! ACTUAL EVENT FUNCTION
+
+function webExportWillWriteHTMLForItem(contextDictionary, item, fileName, mutableHTMLString) {
+	// Convert our string to Javascript for happier parsing
+	var output = mutableHTMLString;
+	
+	// Run the titlecase formatting
+	output = output.replace(/<title>(.*?)<\/title>/g, correctTitleFormatting);
+	// Remove "Index" from the title on the index page
+	var titlesearchRE = new RegExp('<title>' + config.TITLE_FORMATTING.replace(/[.*+?|()\[\]{}\\^$]/g, '\\$&').replace('\\$site\\$', '(.*?)').replace('\\$page\\$', 'Index') + '</title>');
+	output = output.replace(titlesearchRE, '<title>$1</title>');
+	
+	// Look for links wrapped in links
+	var linkRE = /(<a href=[^>]+>(?:<(?!\/a>)|[^<])*?)<a href=[^>]+>(.*?)<\/a>(.*?<\/a>)/g;
+	output = output.replace(linkRE, '$1$2$3');
+	
+	// Fix markup for <aside> elements (which aren't supported by Markdown)
+	output = output.replace(/<p><aside><\/p>\n/g, '<aside>');
+	output = output.replace(/\n<\/aside><\/p>/g, '</p>\n</aside>');
+	
+	// Construct breadcrumbs, if the user so desires
+	if (config.USE_TAGS_AS_BREADCRUMBS) {
+		// Grab our list of tags
+		var tags = item.tagNames(),
+			thisTitle = item.displayName(),
+			crumbs = [],
+			// Loop variables for later
+			i, count, tag;
+		if (thisTitle == 'index') {
+			// On index page use a special link (generally to top of the page)
+			crumbs.push('<li class="active"><a href="' + config.BREADCRUMB_PAGE_TOP_LINK + '">' + config.BREADCRUMB_INDEX_TITLE + '</a></li>');
+		} else {
+			// Add our homepage first
+			crumbs.push('<li><a href="index.html">' + config.BREADCRUMB_INDEX_TITLE + '</a></li>');
+			// Add any tags as breadcrumbs
+			for (i = 0, count = tags.count(); i < count; i++) {
+				tag = tags.objectAtIndex_(i);
+				// Add tag to the breadcrumbs
+				crumbs.push('<li><a href="' + tag + '.html">' + toTitleCase(tag.replace(/-/g, ' ')) + '</a></li>');
+			}
+			// Capitalize our page title, and add it last
+			thisTitle = toTitleCase(thisTitle.replace(/-/g, ' '));
+			crumbs.push('<li class="active"><a href="' + config.BREADCRUMB_PAGE_TOP_LINK + '">' + thisTitle + '</a></li>');
+		}
+		
+		crumbs = crumbs.join('\n');
+		output = output.replace(/\$breadcrumbs\$/gi, '<ul class="' + config.BREADCRUMB_UL_CLASS + '">\n' + crumbs + '\n</ul>');
+	}
+	
+	// Replace code blocks with shortcuts in them with special formatting
+	if (config.USE_KBD_SHORTCUTS) {
+		// This grabs the entire shortcut and processes it
+		output = output.replace(/<code>((?:command|option|control|shift|up|down|left|right|escape|tab|enter|space|page|home|end|delete|backspace|function|forward|caps|F[0-9]|[A-Z]|[0-9](?=\s|<\/code>))\b.*?)<\/code>/g, parseKeyCodeBlock);
+	}
+	
+	// Setup our new string
+	mutableHTMLString.setString_(output);
+	// Return it
+	return mutableHTMLString;
+}
+
+function moveFile(src, dst) {
+	var fileManager = NSFileManager.defaultManager();
+	if (fileManager.fileExistsAtPath_(dst)) {
+		fileManager.removeItemAtPath_error_(dst, null);
+	}
+	return fileManager.moveItemAtPath_toPath_error_(src, dst, null);
+}
+
+function webExportDidEnd(contextDictionary) {
+	/*
+	We need to do four things now that we are done exporting:
+	
+	1. Move all images into the images folder
+	2. Move all CSS into the css folder
+	3. Move all Javascript into the js folder
+	4. Remove all category files and other cruft
+	*/
+	// Grab our filemanager object and path variables
+	var fileManager = NSFileManager.defaultManager(),
+		rootPath = contextDictionary.outputDirectoryURL.path(),
+		cssPath = rootPath.stringByAppendingPathComponent_(config.CSS_PATH),
+		imgPath = rootPath.stringByAppendingPathComponent_(config.IMG_PATH),
+		jsPath = rootPath.stringByAppendingPathComponent_(config.JS_PATH),
+		// Loop variables for later
+		i, count, item,
+		checkedCSS = false, checkedImg = false, checkedJS = false;
+	
+	// Grab our directory contents, and loop over them
+	var dirContents = fileManager.contentsOfDirectoryAtPath_error_(rootPath, null);
+	for (i = 0, count = dirContents.count(); i < count; i++) {
+		// Select our active item
+		item = dirContents.objectAtIndex_(i);
+		// Check to see if it needs to be moved or removed
+		if (item.pathExtension().lowercaseString() == 'css') {
+			// Make sure css folder exists if we haven't already
+			if (!checkedCSS) {
+				if (!fileManager.fileExistsAtPath_(cssPath)) {
+					fileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_(cssPath, true, null, null);
+				}
+				checkedCSS = true;
+			}
+			// Move the CSS file into the css folder
+			moveFile(rootPath.stringByAppendingPathComponent_(item), cssPath.stringByAppendingPathComponent_(item));
+		} else if (item.pathExtension().lowercaseString() == 'jpg' || item.pathExtension().lowercaseString() == 'jpeg' || item.pathExtension().lowercaseString() == 'png' || item.pathExtension().lowercaseString() == 'gif') {
+			// Make sure img folder exists if we haven't already
+			if (!checkedImg) {
+				if (!fileManager.fileExistsAtPath_(imgPath)) {
+					fileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_(imgPath, true, null, null);
+				}
+				checkedImg = true;
+			}
+			// Move the image into the images folder
+			moveFile(rootPath.stringByAppendingPathComponent_(item), imgPath.stringByAppendingPathComponent_(item));
+		} else if (item.pathExtension().lowercaseString() == 'js') {
+			// Make sure JS folder exists if we haven't already
+			if (!checkedJS) {
+				if (!fileManager.fileExistsAtPath_(jsPath)) {
+					fileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_(jsPath, true, null, null);
+				}
+				checkedJS = true;
+			}
+			// Move the JavaScript file into the js folder
+			moveFile(rootPath.stringByAppendingPathComponent_(item), jsPath.stringByAppendingPathComponent_(item));
+		} else if (config.PRUNE_CATEGORIES && item.lastPathComponent().hasPrefix_('category_')) {
+			// Item is a category file; remove it
+			fileManager.removeItemAtPath_error_(item, null);
+		}
+	}
+	
+	// Finally, remove the _page_index.html file
+	if (config.PRUNE_PAGE_INDEX) {
+		fileManager.removeItemAtPath_error_(rootPath.stringByAppendingPathComponent_('_page_index.html'), null);
+	}
+}

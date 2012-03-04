@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>allowPluginLinks</key>
+	<true/>
+	<key>bdToBookmarkAliasUpgrade</key>
+	<true/>
+	<key>createSpotlightIndex</key>
+	<true/>
+	<key>dbVersion</key>
+	<string>7</string>
+	<key>defaultPage</key>
+	<string>index</string>
+	<key>defaultUUID</key>
+	<string>b69c3f10-8997-43d8-8e5a-375d35c4eaf4</string>
+	<key>localWebAccess</key>
+	<false/>
+	<key>newPageUTI</key>
+	<string>net.daringfireball.markdown</string>
+	<key>openWindows</key>
+	<array>
+		<dict>
+			<key>displayUUID</key>
+			<string>b69c3f10-8997-43d8-8e5a-375d35c4eaf4</string>
+			<key>drawerOpen</key>
+			<false/>
+			<key>openUUIDProperties</key>
+			<array>
+				<dict>
+					<key>itemUUID</key>
+					<string>b69c3f10-8997-43d8-8e5a-375d35c4eaf4</string>
+					<key>rulerVisible</key>
+					<false/>
+					<key>selectedRange</key>
+					<string>{275, 0}</string>
+					<key>visibleGlyphs</key>
+					<string>{0, 1553}</string>
+					<key>zoomScale</key>
+					<real>1</real>
+				</dict>
+				<dict>
+					<key>itemUUID</key>
+					<string>5c543a77-4edf-454c-86ef-3bae81685b14</string>
+				</dict>
+				<dict>
+					<key>itemUUID</key>
+					<string>4b8d5983-bd95-4181-9568-fb186a936106</string>
+				</dict>
+				<dict>
+					<key>itemUUID</key>
+					<string>44942588-65b1-4af0-9953-d9b9e9e5fa9a</string>
+					<key>rulerVisible</key>
+					<false/>
+					<key>selectedRange</key>
+					<string>{84, 0}</string>
+					<key>visibleGlyphs</key>
+					<string>{0, 655}</string>
+					<key>zoomScale</key>
+					<real>1</real>
+				</dict>
+				<dict>
+					<key>itemUUID</key>
+					<string>69041b40-7bc7-41e1-92f6-0fd556d46c04</string>
+					<key>rulerVisible</key>
+					<false/>
+					<key>selectedRange</key>
+					<string>{0, 0}</string>
+					<key>visibleGlyphs</key>
+					<string>{0, 154}</string>
+					<key>zoomScale</key>
+					<real>1</real>
+				</dict>
+			</array>
+			<key>windowFrame</key>
+			<string>{{70, 40}, {632, 704}}</string>
+		</dict>
+	</array>
+	<key>skIndexVersion</key>
+	<integer>6</integer>
+	<key>updatedFMPageToRealUTIs</key>
+	<true/>
+	<key>updatedSpecialPages3</key>
+	<true/>
+	<key>uuid</key>
+	<string>71173eb5-4e1f-448d-b54f-b5c3061923ae</string>
+</dict>
+</plist>

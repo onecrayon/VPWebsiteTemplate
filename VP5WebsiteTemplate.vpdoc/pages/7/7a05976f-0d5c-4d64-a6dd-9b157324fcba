@@ -1,0 +1,52 @@
+/**
+ * CONFIGURATION
+ *
+ * Change these variables to configure document behavior
+ */
+
+var config = {
+/** Page <title> formatting */
+    
+    // used to tell the script what to expect
+    // only necessary to automatically strip "index" on homepage
+    // $site$ will be the site title, $page$ the page title
+    TITLE_FORMATTING: '$site$: $page$',
+    
+/** Page renaming */
+
+	// true: automatically rename pages using URL-friendly scheme
+	AUTO_PAGE_RENAMING: true,
+
+/** Pruning */
+
+	// true: removes all "category_" files
+	PRUNE_CATEGORIES: true,
+	// true: removes "_page_index.html" file
+	PRUNE_PAGE_INDEX: true,
+
+/** Breadcrumbs */
+
+	// true: use tags as breadcrumbs
+	USE_TAGS_AS_BREADCRUMBS: true,
+	// class of the <ul> to replace (string)
+	BREADCRUMB_UL_CLASS: 'breadcrumbs',
+	// URL for jumping to page top (string)
+	BREADCRUMB_PAGE_TOP_LINK: '#content',
+	// title for for index.html links (string)
+	BREADCRUMB_INDEX_TITLE: 'Home',
+
+/** Special features */
+
+	// true: converts `command H` in Markdown to:
+	// <kbd class="shortcut"><kbd>command</kbd> <kbd>H</kbd></kbd>
+	USE_KBD_SHORTCUTS: true,
+	// true: converts -> and:> in Markdown to &rarr; in HTML
+	CONVERT_ARROWS_TO_ENTITIES: true,
+	
+/** Asset handling */
+	
+	// Folder names where assets will be moved
+	CSS_PATH: 'css',
+	IMG_PATH: 'images',
+	JS_PATH: 'js'
+};

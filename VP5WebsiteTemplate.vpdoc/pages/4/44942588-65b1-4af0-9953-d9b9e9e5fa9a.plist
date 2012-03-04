@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aliases</key>
+	<array/>
+	<key>attributes</key>
+	<dict>
+		<key>documentBackgroundColor</key>
+		<data>
+		BAtzdHJlYW10eXBlZIHoA4QBQISEhAdOU0NvbG9yAISECE5TT2JqZWN0AIWE
+		AWMDhAJmZgEBhg==
+		</data>
+		<key>lastEditingComputerName</key>
+		<string>Squiddums</string>
+		<key>lastEditingUserName</key>
+		<string>Ian Beck</string>
+		<key>shouldHighlightLinks</key>
+		<false/>
+		<key>skipOnExport</key>
+		<true/>
+	</dict>
+	<key>categories</key>
+	<array/>
+	<key>createdDate</key>
+	<date>2012-03-03T01:11:29Z</date>
+	<key>dataHash</key>
+	<string>4867b46408087b2c0a58ae3d72b47cc6adb0784c</string>
+	<key>displayName</key>
+	<string>VPWebExportPageTemplate</string>
+	<key>encrypted</key>
+	<string>No</string>
+	<key>key</key>
+	<string>vpwebexportpagetemplate</string>
+	<key>metaValues</key>
+	<dict/>
+	<key>modifiedDate</key>
+	<date>2012-03-04T04:37:59Z</date>
+	<key>shouldHighlightLinks</key>
+	<string>Yes</string>
+	<key>skipOnExport</key>
+	<string>No</string>
+	<key>uti</key>
+	<string>public.utf8-plain-text</string>
+	<key>uuid</key>
+	<string>44942588-65b1-4af0-9953-d9b9e9e5fa9a</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

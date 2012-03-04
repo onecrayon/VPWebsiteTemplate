@@ -1,0 +1,214 @@
+/*
+REPLACE THIS CONTENT!
+
+This is what you will need to use to style your particular website. What is currently here just provides some very basic styling to make the example page look less atrocious.
+*/
+
+/* @group Reset */
+
+/*
+Modified Eric Meyer reset for HTML 5
+Source: http://html5doctor.com/html-5-reset-stylesheet/
+*/
+
+html, body, div, span, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+abbr, address, cite, code,
+del, dfn, em, img, ins, kbd, q, samp,
+small, strong, sub, sup, var,
+b, i,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, dialog, figure, footer, header, 
+hgroup, menu, nav, section,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	outline: 0;
+	font-size: 100%;
+	vertical-align: baseline;
+	background: transparent;
+}
+
+article, aside, dialog, figure, footer, header, 
+hgroup, nav, section {
+	display: block;
+}
+
+nav ul {
+	list-style: none;
+}
+
+blockquote, q {
+	quotes: none;
+}
+
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+/* @end */
+
+/* @group Example page styling */
+
+html, body {
+	background: #e5e5e5;
+	height: 100%;
+	font: 1em/1.5em Georgia, "Times New Roman", serif;
+	color: #333;
+}
+
+h1, h2, h3 {
+	color: #000;
+	margin: 32px 0 18px;
+	font: normal 1em/1.125em "Helvetica Neue", Helvetica, Arial, sans-serif;
+	clear: both;
+}
+
+h1 {
+	font-size: 2em;
+	line-height: 1.125;
+}
+
+h2 {
+	font-size: 1.25em;
+	line-height: 1.2;
+}
+
+h3 {
+	font-weight: bold;
+}
+
+p, ul, ol, pre {
+	margin: 0 0 18px;
+}
+
+li {
+	margin-bottom: 3px;
+}
+
+pre, code {
+	font-family: Consolas, Courier, monospace;
+}
+
+pre {
+	overflow: auto;
+	background: #f5f5f5;
+	font-size: .875em;
+}
+
+code {
+	background: #f5f5f5;
+	padding: 1px 3px;
+	font-size: .875em;
+}
+
+pre code {
+	display: block;
+	padding: 3px 5px;
+	font-size: 1em;
+}
+
+a {
+	color: #000;
+}
+
+a:hover, a:active {
+	color: #6e6e6e;
+}
+
+/* @group Shortcuts */
+
+.shortcut kbd {
+	line-height: 1;
+	display: inline-block;
+	background: #f5f5f5;
+	padding: 3px 5px;
+	position: relative;
+	text-shadow: 1px 1px rgba(255, 255, 255, .5);
+	
+	/* Advanced styling */
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+	background: -webkit-gradient(linear, left bottom, left top, from(#efefef), to(#f5f5f5));
+	background: -moz-gradient-linear(bottom, #efefef, #f5f5f5);
+	-webkit-box-shadow: inset -1px -1px 1px rgba(0, 0, 0, .15), inset 1px 1px 1px rgba(0, 0, 0, .05);
+	-moz-box-shadow: inset -1px -1px 1px rgba(0, 0, 0, .15), inset 1px 1px 1px rgba(0, 0, 0, .2);
+	box-shadow: inset -1px -1px 1px rgba(0, 0, 0, .15), inset 1px 1px 1px rgba(0, 0, 0, .2);
+}
+
+.shortcut kbd:first-child {
+	margin-right: 1px;
+}
+
+.shortcut kbd:last-child {
+	margin-left: 1px;
+}
+
+.shortcut kbd:only-child {
+	margin: 0;
+}
+
+.shortcut kbd:after {
+	content: '+';
+	position: absolute;
+	right: -8px;
+}
+
+.shortcut kbd:last-child:after {
+	content: '';
+}
+
+/* @end */
+
+#content {
+	background: #fff;
+	width: 550px;
+	margin: 0 auto;
+	padding: 1px 30px;
+	
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+	min-height: 100%;
+	-moz-box-shadow: 0 0 3px #757575;
+	-webkit-box-shadow: 0 0 3px #757575;
+	box-shadow: 0 0 3px #757575;
+}
+
+.breadcrumbs {
+	font: .75em/1em "Helvetica Neue", Helvetica, Arial, sans-serif;
+	text-align: center;
+	margin: 0;
+	list-style-type: none;
+}
+
+.breadcrumbs a {
+	color: #6e6e6e;
+}
+
+.breadcrumbs a:hover, .breadcrumbs a:active {
+	color: #000;
+}
+
+.breadcrumbs .active a {
+	text-decoration: none;
+}
+
+footer {
+	padding: 18px 0 36px;
+	margin: 0 36px;
+	border-top: 2px solid #e5e5e5;
+}
+
+/* @end */

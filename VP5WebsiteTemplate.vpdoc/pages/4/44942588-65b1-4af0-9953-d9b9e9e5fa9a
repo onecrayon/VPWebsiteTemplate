@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8"/>
+	<!-- If you use a different format for your title, update VPJSPrefixScript's TITLE_FORMATTING variable to have "Index" automatically stripped from the home page -->
+	<title>VP5 website template: <%= page.displayName() %></title>
+	<!-- This document is setup with a styles.css page already, but you can always use something else if you prefer -->
+	<link rel="stylesheet" href="css/styles.css" type="text/css"/>
+</head>
+<body>
+	<!-- Currently the template is setup to use #content as the link to the top of the page. You can modify this in VPWebExportScript if you want to use a different ID -->
+	<div id="content">
+		<section>
+		$page$
+		</section>
+		
+		<footer>
+			<!-- If you want breadcrumbs (using page tags), stick this where you want them -->
+			$breadcrumbs$
+		</footer>
+	</div>
+</body>
+</html>

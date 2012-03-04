@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>aliases</key>
+	<array/>
+	<key>attributes</key>
+	<dict>
+		<key>lastEditingComputerName</key>
+		<string>Squiddums</string>
+		<key>lastEditingUserName</key>
+		<string>Ian Beck</string>
+		<key>shouldHighlightLinks</key>
+		<false/>
+		<key>skipOnExport</key>
+		<true/>
+	</dict>
+	<key>categories</key>
+	<array/>
+	<key>createdDate</key>
+	<date>2012-03-03T01:06:57Z</date>
+	<key>dataHash</key>
+	<string>7d1c99e30cc42336ba26efb3cabe39a47ce0aa1b</string>
+	<key>displayName</key>
+	<string>VPPageEventScript</string>
+	<key>encrypted</key>
+	<string>No</string>
+	<key>key</key>
+	<string>vppageeventscript</string>
+	<key>metaValues</key>
+	<dict/>
+	<key>modifiedDate</key>
+	<date>2012-03-04T02:38:37Z</date>
+	<key>shouldHighlightLinks</key>
+	<string>Yes</string>
+	<key>skipOnExport</key>
+	<string>No</string>
+	<key>uti</key>
+	<string>org.jstalk.jstalk-source</string>
+	<key>uuid</key>
+	<string>5c543a77-4edf-454c-86ef-3bae81685b14</string>
+	<key>version</key>
+	<integer>1</integer>
+</dict>
+</plist>

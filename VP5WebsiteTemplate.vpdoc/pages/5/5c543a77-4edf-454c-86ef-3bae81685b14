@@ -1,0 +1,42 @@
+function pageWasOpened(document, item) {}
+
+function pageWasClosed(document, item) {}
+
+
+/**
+ * urlFriendlyTitle(string)
+ *
+ * This method transforms the passed string into a URL-friendly
+ * version:
+ * - punctuation is removed except for periods, underscores, and dashes
+ * - spaces are replaced with dashes (-)
+ * - all text is switched to lowercase
+ */
+
+function toURLFriendlyTitle(title) {
+	title = title.replace(/[!*();:@&=+$,\/?#\[\]%\n\r\\]/g, ' ').replace(/[''""]/g, '');
+	title = title.replace(/\s+/g, '-');
+	title = title.toLowerCase();
+	return title;
+}
+
+function pageWasCreated(document, item) {
+	if (config.AUTO_PAGE_RENAMING) {
+		var oldName = item.displayName(),
+			newName = toURLFriendlyTitle(oldName),
+			counter = 1;
+		// Try to rename the page, and append a number to it if a copy already exists
+		while (!document.renameItemWithUUID_to_(item.uuid(), newName)) {
+			newName = newName.replace(/^(.*?)(?:-\d+)?((?:\.[a-z]+)?)$/, '$1-' + counter + '$2');
+			counter++;
+		}
+		// Only add an alias if more than the case changed
+		if (oldName.toLowerCase() !== newName) {
+			// Now that the item is renamed, add the old displayName as an alias
+			document.addAlias_forItemUUID_(oldName, item.uuid());
+		}
+	}
+}
+
+function pageWasDeleted(document, pageName) {}
+

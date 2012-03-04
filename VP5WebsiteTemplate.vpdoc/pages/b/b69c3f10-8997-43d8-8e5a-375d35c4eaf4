@@ -1,0 +1,113 @@
+# VoodooPad 5 website template
+
+This is the template that I use to easily manage a static website using [VoodooPad 5](http://flyingmeat.com/voodoopad/) (and this page is both instructions and an example of how to use the various features). VoodooPad 5 is a good fit for your website if:
+
+1. You need a static site
+2. That is simple enough to use a flat hierarchy
+3. And only has one page template (or minor variations on a single template)
+
+For instance, I use VoodooPad for an app documentation site, but wouldn't want to use it for my blog.
+
+This document is setup to use Markdown for basic styling. It would probably be possible to do the same with rich text, but the scripts in this particular template will not work right if you do. You can adjust the default type of page with the Info=>Document palette.
+
+This page is both documentation and an example of what you can do with this template. To see it as rendered HTML, use **File=>Export Document=>Web Export...** or `command control W` and open the resulting `index.html` file in your browser of choice.
+
+* [Moveable parts](#parts)
+* [Assets](#assets)
+* [Linking](#linking)
+* [Breadcrumbs](#breadcrumbs)
+* [Final notes](#final)
+* [License](#license)
+
+## Moveable parts    {#parts}
+
+**VPWebExportPageTemplate**
+
+Your basic HTML template. Probably your first order of business is changing this file to setup your site's markup. If you want to use the breadcrumb feature, you will need to include `<ul class="breadcrumbs"></ul>` in your template. See [Using breadcrumbs](#breadcrumbs) below.
+
+By default the template uses the styles.css page for its CSS. You can always change this. I'm hoping to modify this template in future to allow using LESS, instead, and have it compile automatically on export (or add it yourself!), but in the short term vanilla CSS is the only thing supported.
+
+**styles.css**
+
+Your default stylesheet. If you want to use a different stylesheet, remember to set `VPDirectWriteOnHTMLExport` equal to `1` in the Page Meta palette; otherwise it will be converted to HTML when you export it.
+
+**VPJSPrefixScript**
+
+This contains a list of configuration variables. Instead of mucking around in the various scripts, you can pop open this page and adjust the variables to suit your needs.
+
+**VPNewPageTemplate**
+
+Add anything here that you want to show up in new pages by default. Probably only necessary if you switch from using Markdown.
+
+**VPWebExportScript** and **VPPageEventScript**
+
+These handle the actual logic that goes into the special web export and page creation features. Unless you want to add something new or make a very specific change to the existing behavior, you should be able to get along by modifying VPJSPrefixScript instead.
+
+## Assets    {#assets}
+
+In general, you should add all of your assets to the VoodooPad project using **File=>Import...** for images and simply creating plain text pages for Javascript (just remember to set `VPDirectWriteOnHTMLExport` to `1` in the Page Meta for Javascript!). The web export scripts will automatically sort them into folders on export.
+
+It is possible to define standard template files in a web export plugin, for instance, but by keeping everything within the project you can move it around a lot easier (particularly now that VoodooPad 5 supports things like synching with Dropbox or Git).
+
+## Linking    {#linking}
+
+In general, VoodooPad will handle all your linking needs automatically thanks to its wiki nature. However, if you need to link to a page anchor, you can do so like this:
+
+_Same page_  
+`[Link text](#anchor)`
+
+_Different page_  
+`[Link text](page-name.html#anchor)`
+
+For the different page linking, you will notice that VP will highlight "page-name" (assuming you have a page called page-name, of course). Never fear, though! This will allow you to jump to that page easily, but it will not result in a nested link. VoodooPad is smart about that (and there's some logic in the export scripts to catch any nested links that it misses).
+
+Linking to images works basically the same (whether you use HTML or Markdown). The image name will be highlighted, but you should not end up with nested links.
+
+## Breadcrumbs    {#breadcrumbs}
+
+Breadcrumbs allow you to add some virtual hierarchy to your otherwise flat site, and this particular template uses VoodooPad's tags feature to do so. You can disable or configure breadcrumbs by modifying the configuration variables in VPJSPrefixScript.
+
+Here's how to use breadcrumbs:
+
+When you create a new page, open the **Tags** palette. Add tags for the pages that lead to this page (excluding the index page, which is automatically inserted as the first breadcrumb). So for instance, if you have a "Howdy Stranger" page that you are using as a section landing, and you just created "This Here's the Saloon" that you want to be nested underneath it in the breadcrumbs, you would add "howdy-stranger" to the tags. This would result in the following markup (using default settings for the index page title; configure on VPWebExportScript):
+
+    <ul class="breadcrumbs">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="howdy-strange.html">Howdy Stranger</a></li>
+        <li class="active"><a href="#content">This Here's the Saloon</a></li>
+    </ul>
+
+If the tags are empty, you would get the Home link and the page top link only. If you add more than one tag, it theoretically should add more in-between pages, but your mileage with this may vary since I haven't tested how tag ordering is handled.
+
+In your VPWebExportPageTemplate, insert `$breadcrumbs$` where you would like your breadcrumb UL to show up.
+
+Note that if you tried to use the page "This Here's the Saloon" in another page's breadcrumb trail, you would use the tag "this-heres-the-saloon" (which is what will be automatically generated for the page when you create it), and this would result in the title in the breadcrumbs "This Heres the Saloon" (because the title is automatically generated based on the tag). If you find oddities in your breadcrumb titles vs. your actual page titles, this is likely the cause.
+
+## Final notes    {#final}
+
+If you've read this far, congratulations! You now know pretty much everything you need to convert this from a template into your own site. To get started, simply delete this page (or copy it elsewhere if you think you might need to reference it), modify the VPWebExportPageTemplate and styles.css pages, and away you go!
+
+When exporting, all you need to specify is the output directory. Everything else will be handled correctly (you don't even have to choose "Markdown" from the "Export format" dropbox; as long as your pages are Markdown pages--and they will be if you use this template--VoodooPad will just do the right thing automatically).
+
+Enjoy! And if you add some awesome sauce of your own to the export scripts or similar, consider sharing them with me!
+
+## License    {#license}
+
+The content and scripts in this template are distributed under an MIT license. VoodooPad, the VoodooPad file format, JSTalk, and similar are all rights reserved by [Flying Meat](http://flyingmeat.com/) and Gus Mueller. This project is in no way endorsed by or affiliated with Flying Meat, so if it melts your computer or something, don't go blaming Gus.
+
+Includes source code from the following other MIT-licensed projects:
+
+* Python Markdown by Trent Mick  
+  <https://github.com/trentm/python-markdown2>
+* To Title Case by David Gouch  
+  <http://individed.com/code/to-title-case/>
+
+### The MIT license
+
+Copyright (c) 2012 Ian Beck
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
