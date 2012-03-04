@@ -11,6 +11,11 @@ var config = {
     // only necessary to automatically strip "index" on homepage
     // $site$ will be the site title, $page$ the page title
     TITLE_FORMATTING: '$site$: $page$',
+
+/** CSS page name */
+    
+    // allows both previewing in VoodooPad and exporting correctly
+    CSS_PAGE_NAME: 'styles.css',
     
 /** Page renaming */
 

@@ -12,7 +12,7 @@ This template is setup to use Markdown for basic styling. It would probably be p
 
 ## Installation
 
-**Requires VoodooPad 5 beta, build 3599 or greater**
+**Requires VoodooPad 5 beta, build 3602 or greater**
 
 To install, either clone this repo or [download here](https://github.com/onecrayon/VPWebsiteTemplate/zipball/master). You can then open the VP5WebsiteTemplate.vpdoc file in VoodooPad 5 and go from there. The file itself contains full documentation for how to use it.
 
