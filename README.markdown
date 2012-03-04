@@ -1,4 +1,4 @@
-# VoodooPad 5 website template
+# VoodooPad 5 website template, v1.0
 
 This is the template that I use to easily manage a static website using [VoodooPad 5](http://flyingmeat.com/voodoopad/). VoodooPad 5 is a good fit for your website if:
 
@@ -12,14 +12,16 @@ This template is setup to use Markdown for basic styling. It would probably be p
 
 ## Installation
 
-To install, either clone this repo or use the ZIP button above to download the project. You can then open the VP5WebsiteTemplate.vpdoc file in VoodooPad 5 and go from there. The file itself contains full documentation for how to use it.
+**Requires VoodooPad 5 beta, build 3599 or greater**
+
+To install, either clone this repo or [download here](https://github.com/onecrayon/VPWebsiteTemplate/zipball/master). You can then open the VP5WebsiteTemplate.vpdoc file in VoodooPad 5 and go from there. The file itself contains full documentation for how to use it.
 
 ## Features
 
-* Highly configurable by modifying some variables in a simple Javascript page (you can turn off or modify just every feature listed here)
-* Automatically renames pages when you create using URL-friendly names, and adds the original name to the page aliases
+* Highly configurable by modifying some variables in a simple Javascript page (you can disable or modify every feature listed here)
+* Automatically renames new pages with URL-friendly names
 * Automatically creates breadcrumbs based on page tags
-* Copies assets (images, CSS, and Javascript) into folders, leaving your exported site with only HTML in the root folder
+* Copies assets (images, CSS, and Javascript) into folders
 * Supports MarkdownExtra-style header IDs for easier same page navigation links:
   
         ## My header    {#header-ID}
@@ -28,7 +30,17 @@ To install, either clone this repo or use the ZIP button above to download the p
 * Converts shortcuts using the format `` `command H` `` into special HTML (for easier styling as opposed to plain code blocks)
 * Fixes paragraphs wrapping `<aside>` elements (since Markdown doesn't support HTML5 very well)
 
-And of course if it doesn't do something that you want/need, you can always expand the capabilities by writing a bit of JavaScript.
+And of course if the template doesn't do something that you want/need, you can always expand the capabilities by writing a bit of JavaScript.
+
+## Changelog
+
+**v1.0**
+
+* Initial public release for VP5 beta
+* Central configuration variables
+* Automatic URL-friendly page names
+* Automatic breadcrumbs using page tags
+* And lots more!
 
 ## License
 

@@ -33,19 +33,15 @@
 					<key>rulerVisible</key>
 					<false/>
 					<key>selectedRange</key>
-					<string>{275, 0}</string>
+					<string>{0, 0}</string>
 					<key>visibleGlyphs</key>
-					<string>{0, 1553}</string>
+					<string>{0, 1492}</string>
 					<key>zoomScale</key>
 					<real>1</real>
 				</dict>
 				<dict>
 					<key>itemUUID</key>
-					<string>5c543a77-4edf-454c-86ef-3bae81685b14</string>
-				</dict>
-				<dict>
-					<key>itemUUID</key>
-					<string>4b8d5983-bd95-4181-9568-fb186a936106</string>
+					<string>7a05976f-0d5c-4d64-a6dd-9b157324fcba</string>
 				</dict>
 				<dict>
 					<key>itemUUID</key>
@@ -53,9 +49,9 @@
 					<key>rulerVisible</key>
 					<false/>
 					<key>selectedRange</key>
-					<string>{84, 0}</string>
+					<string>{0, 0}</string>
 					<key>visibleGlyphs</key>
-					<string>{0, 655}</string>
+					<string>{0, 866}</string>
 					<key>zoomScale</key>
 					<real>1</real>
 				</dict>
@@ -67,7 +63,7 @@
 					<key>selectedRange</key>
 					<string>{0, 0}</string>
 					<key>visibleGlyphs</key>
-					<string>{0, 154}</string>
+					<string>{0, 932}</string>
 					<key>zoomScale</key>
 					<real>1</real>
 				</dict>
