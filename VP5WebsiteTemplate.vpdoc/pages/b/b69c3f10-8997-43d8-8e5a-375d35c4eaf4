@@ -10,7 +10,7 @@ For instance, I use VoodooPad for an app documentation site, but wouldn't want t
 
 This document is setup to use Markdown for basic styling. It would probably be possible to do the same with rich text, but the scripts in this particular template will not work right if you do. You can adjust the default type of page with the Info=>Document palette.
 
-This page is both documentation and an example of what you can do with this template. To see it as rendered HTML, use **File=>Export Document=>Web Export...** or `command control W` and open the resulting `index.html` file in your browser of choice.
+This page is both documentation and an example of what you can do with this template. To see it as rendered HTML, use **File=>Export Document=>Web Export...** or `command control W` and open the resulting `index.html` file in your browser of choice. (You can also use **View=>HTML Preview** to quickly preview the page, but it will not support extra features like Markdown-Extra header IDs and breadcrumbs.)
 
 * [Moveable parts](#parts)
 * [Assets](#assets)
