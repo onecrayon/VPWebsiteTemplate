@@ -20,8 +20,8 @@ To install, either clone this repo or [download here](https://github.com/onecray
 
 * Highly configurable by modifying some variables in a simple Javascript page (you can disable or modify every feature listed here)
 * Automatically renames new pages with URL-friendly names
-* Automatically creates breadcrumbs based on page tags
-* Copies assets (images, CSS, and Javascript) into folders
+* Automatically creates breadcrumbs based on page tags or a custom page meta key
+* Copies assets (images, CSS, Javascript, and Zip files) into folders
 * Supports MarkdownExtra-style header IDs for easier same page navigation links:
   
         ## My header    {#header-ID}
@@ -33,6 +33,13 @@ To install, either clone this repo or [download here](https://github.com/onecray
 And of course if the template doesn't do something that you want/need, you can always expand the capabilities by writing a bit of JavaScript.
 
 ## Changelog
+
+**v1.1**
+
+* Breadcrumbs will now lookup the link using page aliases (allowing much more control over what is output as the breadcrumb title)
+* Breadcrumbs can be defined using the `breadcrumbs` custom page meta key and a comma-delimited list of pages (allowing explicit ordering, which is not possible with tags)
+* Sorts zip files into `downloads` folder
+* Automaticallys strips out links to project .htaccess file (if included in the project)
 
 **v1.0**
 
