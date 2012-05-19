@@ -53,5 +53,6 @@ var config = {
 	// Folder names where assets will be moved
 	CSS_PATH: 'css',
 	IMG_PATH: 'images',
-	JS_PATH: 'js'
+	JS_PATH: 'js',
+	DL_PATH: 'downloads'
 };

@@ -92,6 +92,8 @@ function webExportWillWriteHTMLForItem(contextDictionary, item, fileName, mutabl
 	// Look for links wrapped in links
 	var linkRE = /(<a href=[^>]+>(?:<(?!\/a>)|[^<])*?)<a href=[^>]+>(.*?)<\/a>(.*?<\/a>)/g;
 	output = output.replace(linkRE, '$1$2$3');
+	// Look for links to .htaccess and strip them
+	output = output.replace(/<a href=".*?\.htaccess(?:\.html)?".*?>(.htaccess)<\/a>/g, '$1');
 	
 	// Fix markup for <aside> elements (which aren't supported by Markdown)
 	output = output.replace(/<p><aside><\/p>\n/g, '<aside>');
@@ -104,7 +106,15 @@ function webExportWillWriteHTMLForItem(contextDictionary, item, fileName, mutabl
 			thisTitle = item.displayName(),
 			crumbs = [],
 			// Loop variables for later
-			i, count, tag;
+			i, count, tag, tagName, tagTarget;
+		if (item.metaValueForKey_('breadcrumbs')) {
+			tags = NSMutableArray.array();
+			var tagInterim = item.metaValueForKey_('breadcrumbs').split(/,\s*/);
+			// Convert the damn thing to an NSArray, since there's no good way to move the other direction currently
+			for (var i = 0, count = tagInterim.length; i < count; i++) {
+				tags.addObject_(tagInterim[i]);
+			}
+		}
 		if (thisTitle == 'index') {
 			// On index page use a special link (generally to top of the page)
 			crumbs.push('<li class="active"><a href="' + config.BREADCRUMB_PAGE_TOP_LINK + '">' + config.BREADCRUMB_INDEX_TITLE + '</a></li>');
@@ -114,11 +124,28 @@ function webExportWillWriteHTMLForItem(contextDictionary, item, fileName, mutabl
 			// Add any tags as breadcrumbs
 			for (i = 0, count = tags.count(); i < count; i++) {
 				tag = tags.objectAtIndex_(i);
+				// Figure out our displayed tagName
+				if (tag.toLowerCase() === tag) {
+					tagName = toTitleCase(tag.replace(/-/g, ' '));
+				} else {
+					tagName = tag;
+				}
+				// Find the page related to the tag (document is a global variable pointing to the current VPDocument instance)
+				tagTarget = document.pageForKey_(tag);
+				if (tagTarget) {
+					if (!tagTarget.isText() && tagTarget.aliasAddress()) {
+						// Working with an alias
+						tagTarget = document.pageForUUID_(tagTarget.aliasAddress());
+					}
+					tag = tagTarget.displayName();
+				}
 				// Add tag to the breadcrumbs
-				crumbs.push('<li><a href="' + tag + '.html">' + toTitleCase(tag.replace(/-/g, ' ')) + '</a></li>');
+				crumbs.push('<li><a href="' + tag.toLowerCase() + '.html">' + tagName + '</a></li>');
 			}
 			// Capitalize our page title, and add it last
-			thisTitle = toTitleCase(thisTitle.replace(/-/g, ' '));
+			if (thisTitle.toLowerCase() == thisTitle) {
+				thisTitle = toTitleCase(thisTitle.replace(/-/g, ' '));
+			}
 			crumbs.push('<li class="active"><a href="' + config.BREADCRUMB_PAGE_TOP_LINK + '">' + thisTitle + '</a></li>');
 		}
 		
@@ -161,9 +188,10 @@ function webExportDidEnd(contextDictionary) {
 		cssPath = rootPath.stringByAppendingPathComponent_(config.CSS_PATH),
 		imgPath = rootPath.stringByAppendingPathComponent_(config.IMG_PATH),
 		jsPath = rootPath.stringByAppendingPathComponent_(config.JS_PATH),
+		dlPath = rootPath.stringByAppendingPathComponent_(config.DL_PATH),
 		// Loop variables for later
 		i, count, item,
-		checkedCSS = false, checkedImg = false, checkedJS = false;
+		checkedCSS = false, checkedImg = false, checkedJS = false, checkedDL = false;
 	
 	// Grab our directory contents, and loop over them
 	var dirContents = fileManager.contentsOfDirectoryAtPath_error_(rootPath, null);
@@ -201,6 +229,16 @@ function webExportDidEnd(contextDictionary) {
 			}
 			// Move the JavaScript file into the js folder
 			moveFile(rootPath.stringByAppendingPathComponent_(item), jsPath.stringByAppendingPathComponent_(item));
+		} else if (item.pathExtension().lowercaseString() == 'zip') {
+			// Make sure download folder exists if we haven't already
+			if (!checkedDL) {
+				if (!fileManager.fileExistsAtPath_(dlPath)) {
+					fileManager.createDirectoryAtPath_withIntermediateDirectories_attributes_error_(dlPath, true, null, null);
+				}
+				checkedDL = true;
+			}
+			// Move the downloadable file into the downloads folder
+			moveFile(rootPath.stringByAppendingPathComponent_(item), dlPath.stringByAppendingPathComponent_(item));
 		} else if (config.PRUNE_CATEGORIES && item.lastPathComponent().hasPrefix_('category_')) {
 			// Item is a category file; remove it
 			fileManager.removeItemAtPath_error_(item, null);

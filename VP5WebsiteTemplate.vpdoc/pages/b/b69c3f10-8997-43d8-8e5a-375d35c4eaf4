@@ -45,9 +45,16 @@ These handle the actual logic that goes into the special web export and page cre
 
 ## Assets    {#assets}
 
-In general, you should add all of your assets to the VoodooPad project using **File=>Import...** for images and simply creating plain text pages for Javascript (just remember to set `VPDirectWriteOnHTMLExport` to `1` in the Page Meta for Javascript!). The web export scripts will automatically sort them into folders on export.
+In general, you should add all of your assets to the VoodooPad project using **File=>Import...** for images and simply creating plain text pages for Javascript and CSS (just remember to set `VPDirectWriteOnHTMLExport` to `1` in the Page Meta for Javascript and CSS!). The web export scripts will automatically sort them into folders on export.
 
 It is possible to define standard template files in a web export plugin, for instance, but by keeping everything within the project you can move it around a lot easier (particularly now that VoodooPad 5 supports things like synching with Dropbox or Git).
+
+By default, this template will do the following:
+
+* \*.css files are sorted into a `css` folder
+* \*.jpg, \*.jpeg, \*.png, and \*.gif files are sorted into an `images` folder
+* \*.js files are sorted into a `js` folder
+* \*.zip files are sorted into a `downloads` folder
 
 ## Linking    {#linking}
 
@@ -63,25 +70,29 @@ For the different page linking, you will notice that VP will highlight "page-nam
 
 Linking to images works basically the same (whether you use HTML or Markdown). The image name will be highlighted, but you should not end up with nested links.
 
+Note that you _must_ use Markdown linking (or HTML linking, if working with a plain text page). Format=>Add Link will only work if you are converting rich text pages.
+
 ## Breadcrumbs    {#breadcrumbs}
 
 Breadcrumbs allow you to add some virtual hierarchy to your otherwise flat site, and this particular template uses VoodooPad's tags feature to do so. You can disable or configure breadcrumbs by modifying the configuration variables in VPJSPrefixScript.
 
-Here's how to use breadcrumbs:
+There are two ways to attach breadcrumbs to a page:
 
-When you create a new page, open the **Tags** palette. Add tags for the pages that lead to this page (excluding the index page, which is automatically inserted as the first breadcrumb). So for instance, if you have a "Howdy Stranger" page that you are using as a section landing, and you just created "This Here's the Saloon" that you want to be nested underneath it in the breadcrumbs, you would add "howdy-stranger" to the tags. This would result in the following markup (using default settings for the index page title; configure on VPWebExportScript):
+**1) Tags.** When you create a new page, open the Tags palette. Add a tag for the page that is parent to this page (excluding the index page, which is automatically inserted as the first breadcrumb). So for instance, if you have a "Howdy Stranger" page that you are using as a section landing, and you just created "At the Saloon" that you want to be nested underneath it in the breadcrumbs, you would add "Howdy Stranger" to the tags. This would result in the following markup (using default settings for the index page title; configure on VPWebExportScript):
 
     <ul class="breadcrumbs">
         <li><a href="index.html">Home</a></li>
-        <li><a href="howdy-strange.html">Howdy Stranger</a></li>
-        <li class="active"><a href="#content">This Here's the Saloon</a></li>
+        <li><a href="howdy-stranger.html">Howdy Stranger</a></li>
+        <li class="active"><a href="#content">At the Saloon</a></li>
     </ul>
 
-If the tags are empty, you would get the Home link and the page top link only. If you add more than one tag, it theoretically should add more in-between pages, but your mileage with this may vary since I haven't tested how tag ordering is handled.
+If the tags are empty, you would get the Home link and the page top link only. If you add more than one tag, it will add more in-between pages but note that tags are sorted alphabetically.
 
-In your VPWebExportPageTemplate, insert `$breadcrumbs$` where you would like your breadcrumb UL to show up.
+**2) Page meta.** If you need to have more than one breadcrumb and the alphabetical ordering of tags is causing your breadcrumbs to be ordered wrong, open the Page Meta palette instead. Add a custom meta with the key `breadcrumbs` and for the value enter your page names separated by commas. In the example above, if you have a child page of "At the Saloon" called "Bar Fight", you would enter `Howdy Stranger, At the Saloon` for its "breadcrumbs" meta.
 
-Note that if you tried to use the page "This Here's the Saloon" in another page's breadcrumb trail, you would use the tag "this-heres-the-saloon" (which is what will be automatically generated for the page when you create it), and this would result in the title in the breadcrumbs "This Heres the Saloon" (because the title is automatically generated based on the tag). If you find oddities in your breadcrumb titles vs. your actual page titles, this is likely the cause.
+Regardless of where you define your breadcrumbs, you can use either page links (like "howdy-stranger", which is the default name for the page if you have auto page renaming enabled in VPJSPrefixScript) or any alias assigned to the page ("Howdy Stranger"). In VoodooPad, aliases are case-insensitive. If what you enter is all lowercase, then the system will automatically try to convert it to title case. So if you do enter "howdy-stranger", then it will automatically be converted to "Howdy Stranger". Note that this can lead to capitalization inconsistencies; using the page alias that you want displayed is recommended.
+
+To display your breadcrumbs, insert `$breadcrumbs$` where you would like your breadcrumb UL to show up in your VPWebExportPageTemplate.
 
 ## Final notes    {#final}
 
