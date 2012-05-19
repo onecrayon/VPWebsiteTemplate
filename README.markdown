@@ -1,4 +1,4 @@
-# VoodooPad 5 website template, v1.0.1
+# VoodooPad 5 website template, v1.1
 
 This is the template that I use to easily manage a static website using [VoodooPad 5](http://flyingmeat.com/voodoopad/). VoodooPad 5 is a good fit for your website if:
 

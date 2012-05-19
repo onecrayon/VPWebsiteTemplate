@@ -2,6 +2,8 @@
  * CONFIGURATION
  *
  * Change these variables to configure document behavior
+ *
+ * VERSION: 1.1
  */
 
 var config = {
